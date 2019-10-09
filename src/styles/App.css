@@ -1,0 +1,15 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 2px;
+  border: solid 2px black;
+  width: min-content;
+  margin: 50px auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
