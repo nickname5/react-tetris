@@ -1,5 +1,6 @@
 import React from 'react';
 import Field from './Field.js';
+import NextFigure from './NextFigure.js';
 import Controllers from './Controllers.js';
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
@@ -30,7 +31,10 @@ class Game extends React.Component {
 
     return (
       <main>
-        <Field/>
+        <div className='field-wrapper'>
+          <Field/>
+          <NextFigure/>
+        </div>
         <Controllers
           start={ this.start }
           pause={ this.pause }

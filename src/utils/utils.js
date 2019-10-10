@@ -51,19 +51,29 @@ export const removeFilledRows = (field, filledRows) => {
 //   return notFilledRows;
 // };
 
-export const newFigure = () => {
-  const current = figures[Math.floor(Math.random() * 7)];
-  current.coordinates = {
+export const newFigure = (type) => {
+  let figure;
+
+  if (!type) {
+    figure = figures[Math.floor(Math.random() * 7)];
+  } else {
+    do {
+      figure = figures[Math.floor(Math.random() * 7)];
+    } while(figure.type === type);
+  }
+
+  figure.coordinates = {
     x: 4,
     y: 0,
   };
-  return current;
+
+  return figure;
 };
 
-export const createEmptyField = () => {
-  const row = new Array(HORIZONTAL);
+export const createEmptyField = (hor = HORIZONTAL, ver = VERTICAL) => {
+  const row = new Array(hor);
   row.fill(0);
-  const initialField = new Array(VERTICAL);
+  const initialField = new Array(ver);
   initialField.fill(row);
   return initialField;
 };

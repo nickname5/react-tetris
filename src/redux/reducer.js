@@ -2,7 +2,6 @@ import { addFiguteToField, newFigure, checkFilledRows, removeFilledRows, createE
 import { VERTICAL, HORIZONTAL} from "../utils/constants";
 
 // TODO: disable actions on pause
-// TODO: state: isTicking
 // TODO: state to localStorage
 
 const initialField = createEmptyField();
@@ -13,7 +12,7 @@ const initialState = {
   speed: 1000,
   figure: null,
   score: 0,
-  // nextFigure: null, todo: when migrate to immutable?
+  nextFigure: null, // todo: when migrate to immutable?
 };
 
 export default function reducer(state = initialState, action) {
@@ -28,7 +27,8 @@ export default function reducer(state = initialState, action) {
         return Object.assign({}, state, {
           field: newField,
           animating: false,
-          figure: newFigure(),
+          figure: {...state.nextFigure},
+          nextFigure: newFigure(state.nextFigure.type),
           score: state.score + toScore
         });
       }
@@ -65,7 +65,7 @@ export default function reducer(state = initialState, action) {
           if (filledRows.some((filled) => filled)) {
             return Object.assign({}, state, { field: newField, animating: filledRows, figure: null });
           } else {
-            return Object.assign({}, state, { field: newField, figure: newFigure() });
+            return Object.assign({}, state, { field: newField, figure: { ...state.nextFigure }, nextFigure: newFigure(state.nextFigure.type) });
           }
 
         }
@@ -76,7 +76,8 @@ export default function reducer(state = initialState, action) {
 
       } else {
         // create new figure
-        return Object.assign({}, state, { figure: newFigure() });
+        const newFig = newFigure();
+        return Object.assign({}, state, { figure: newFig, nextFigure: newFigure(newFig.type) });
       }
     }
 

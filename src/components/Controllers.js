@@ -9,20 +9,20 @@ class Controllers extends React.Component {
 
   keyPressHandler = (event) => {
     // console.log(event.key, !!event.key, event.key === ' ', event.key === '');
-    const { left, right, rotate, tick, pause } = this.props;
-    if (event.key === 'ArrowUp'){
+    const { left, right, rotate, tick, pause, animating } = this.props;
+    if (event.key === 'ArrowUp') {
       // console.log('up');
       rotate();
     }
-    if (event.key === 'ArrowDown'){
+    if (event.key === 'ArrowDown' && !animating) {
       // console.log('down');
       tick();
     }
-    if (event.key === 'ArrowLeft'){
+    if (event.key === 'ArrowLeft') {
       // console.log('left');
       left();
     }
-    if (event.key === 'ArrowRight'){
+    if (event.key === 'ArrowRight') {
       // console.log('right');
       right();
     }
@@ -67,11 +67,18 @@ Controllers.propTypes = {
   tick: PropTypes.func,
   speedUp: PropTypes.func,
   speedDown: PropTypes.func,
+  animating: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array,
+  ]),
+  speed: PropTypes.number,
+  score: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
   speed: state.speed,
   score: state.score,
+  animating: state.animating,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -5,7 +5,24 @@
   padding: 2px;
   border: solid 2px black;
   width: min-content;
+  margin-right: 40px;
+}
+
+.field-wrapper {
   margin: 50px auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: min-content;
+}
+
+.next-figure {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 2px;
+  border: solid 2px black;
+  width: min-content;
 }
 
 .row {

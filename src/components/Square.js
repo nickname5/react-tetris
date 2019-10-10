@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/Square.css';
 
-function Square({filled = false, animating = false, speed}) {
+function Square({filled = false, animating = false, speed = 1000}) {
   return (
     <div
       className={ `${filled ? 'filled' : 'empty'} square ${animating ? 'animation' : ''}` }
