@@ -27,7 +27,6 @@ class Game extends React.Component {
   }
 
   render() {
-    const { left, right, rotate, tick } = this.props;
 
     return (
       <main>

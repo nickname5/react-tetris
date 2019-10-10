@@ -1,8 +1,3 @@
-const receiveDepartments = (departments) => ({
-  type: 'RECEIVE_DEPARTMENTS',
-  payload: departments
-});
-
 const tick_ = () => ({
   type: 'TICK'
 });

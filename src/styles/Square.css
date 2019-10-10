@@ -1,6 +1,6 @@
 @keyframes blinking {
     0% {
-        border-color: white;
+        border-color: #e2e2e2;
         animation-timing-function: steps(1, end);
     }
     25% {
@@ -8,7 +8,7 @@
         animation-timing-function: steps(1, end);
     }
     50% {
-        border-color: white;
+        border-color: #e2e2e2;
         animation-timing-function: steps(1, end);
     }
     75% {
@@ -16,14 +16,14 @@
         animation-timing-function: steps(1, end);
     }
     100% {
-        border-color: white;
+        border-color: #e2e2e2;
         animation-timing-function: steps(1, end);
     }
 }
 
 @keyframes inner-blinking {
     0% {
-        background-color: white;
+        background-color: #e2e2e2;
         animation-timing-function: steps(1, end);
     }
     25% {
@@ -31,7 +31,7 @@
         animation-timing-function: steps(1, end);
     }
     50% {
-        background-color: white;
+        background-color: #e2e2e2;
         animation-timing-function: steps(1, end);
     }
     75% {
@@ -39,7 +39,7 @@
         animation-timing-function: steps(1, end);
     }
     100% {
-        background-color: white;
+        background-color: #e2e2e2;
         animation-timing-function: steps(1, end);
     }
 }
@@ -68,9 +68,9 @@
 }
 
 .animation {
-    animation: blinking 1s infinite;
+    animation-name: blinking;
 }
 
 .inner-animation {
-    animation: inner-blinking 1s infinite;
+    animation-name: inner-blinking;
 }

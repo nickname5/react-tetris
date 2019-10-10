@@ -7,9 +7,25 @@ import { tick, left, right, rotate, speedUp, speedDown } from '../redux/actions'
 
 class Controllers extends React.Component {
 
-  keyPressHandler = (e) => {
-    console.log(e);
-    // todo
+  keyPressHandler = (event) => {
+    console.log(event.key);
+    const { left, right, rotate, tick } = this.props;
+    if (event.key === 'ArrowUp'){
+      console.log('up');
+      rotate();
+    }
+    if (event.key === 'ArrowDown'){
+      console.log('down');
+      tick();
+    }
+    if (event.key === 'ArrowLeft'){
+      console.log('left');
+      left();
+    }
+    if (event.key === 'ArrowRight'){
+      console.log('right');
+      right();
+    }
   }
 
   // todo: add debounce/throttling to user actions
@@ -19,7 +35,7 @@ class Controllers extends React.Component {
 
     return (
       <div className="controllers">
-        <div onKeyPress={ this.keyPressHandler }>
+        <div onKeyDown={ this.keyPressHandler } tabIndex="0">
           <Button text="start" action={ start }/>
           <Button text="pause" action={ pause }/>
           <Button text="left" action={ left } />

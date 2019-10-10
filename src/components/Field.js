@@ -8,7 +8,7 @@ import {addFiguteToField} from "../utils/utils";
 class Field extends React.Component {
 
   render() {
-    const { field, figure, animating } = this.props;
+    const { field, figure, animating, speed } = this.props;
     let handledField;
 
     if (figure) {
@@ -23,7 +23,14 @@ class Field extends React.Component {
           handledField.map((row, i) => {
             return (
               <div className="row" key={ 'row' + i }>
-                { row.map((el, j) => <Square filled={ !!el } animating={ animating && animating[i] } key={ 'cell' + j }/>) }
+                { row.map((el, j) => (
+                  <Square
+                    filled={ !!el }
+                    animating={ animating && animating[i] }
+                    key={ 'cell' + j }
+                    speed={ speed }
+                  />
+                )) }
               </div>
             )
           })
@@ -45,7 +52,8 @@ Field.propTypes = {
 const mapStateToProps = (state) => ({
   field: state.field,
   figure: state.figure,
-  animating: state.animating
+  animating: state.animating,
+  speed: state.speed,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
