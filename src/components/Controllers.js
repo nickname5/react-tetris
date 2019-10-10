@@ -8,23 +8,27 @@ import { tick, left, right, rotate, speedUp, speedDown } from '../redux/actions'
 class Controllers extends React.Component {
 
   keyPressHandler = (event) => {
-    console.log(event.key);
-    const { left, right, rotate, tick } = this.props;
+    // console.log(event.key, !!event.key, event.key === ' ', event.key === '');
+    const { left, right, rotate, tick, pause } = this.props;
     if (event.key === 'ArrowUp'){
-      console.log('up');
+      // console.log('up');
       rotate();
     }
     if (event.key === 'ArrowDown'){
-      console.log('down');
+      // console.log('down');
       tick();
     }
     if (event.key === 'ArrowLeft'){
-      console.log('left');
+      // console.log('left');
       left();
     }
     if (event.key === 'ArrowRight'){
-      console.log('right');
+      // console.log('right');
       right();
+    }
+    if (event.key === ' ') {
+      console.log('space bar, pause');
+      pause(); // ?????????????? todo
     }
   }
 

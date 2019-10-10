@@ -1,12 +1,8 @@
-// import { figures } from '../utils/figures';
 import { addFiguteToField, newFigure, checkFilledRows, removeFilledRows, createEmptyField } from "../utils/utils";
 import { VERTICAL, HORIZONTAL} from "../utils/constants";
-// todo: to constants;
 
 // TODO: disable actions on pause
 // TODO: state: isTicking
-// TODO: speed -> animation
-// TODO: score
 // TODO: state to localStorage
 
 const initialField = createEmptyField();
@@ -17,6 +13,7 @@ const initialState = {
   speed: 1000,
   figure: null,
   score: 0,
+  // nextFigure: null, todo: when migrate to immutable?
 };
 
 export default function reducer(state = initialState, action) {
@@ -37,26 +34,26 @@ export default function reducer(state = initialState, action) {
       }
 
       if (state.figure) {
-
-        // just move to bottom
         const current = {...state.figure};
 
         let forwardCellIsNotEmpty = false;
 
         if (current.coordinates.y + current.matrix.length < VERTICAL) {
-          // check line below
-          const lineBellow = [...state.field[current.coordinates.y + current.matrix.length]];
-          const figureBottomCells = current.matrix[current.matrix.length - 1];
-          const pairs = figureBottomCells.map((el, i) => {
-            return [
-              el,
-              lineBellow[i + current.coordinates.x]
-            ];
+          // check below cells
+          const bottomEdge = current.matrix[0].map((el, x) => {
+            let bottomFilledIndex;
+            for (let y = current.matrix.length - 1; y >= 0; y--) {
+              if (!!current.matrix[y][x]) {
+                bottomFilledIndex = y;
+                break;
+              }
+            }
+            return bottomFilledIndex;
           });
-          if (pairs.some((pair) => pair[0] + pair[1] === 2)) {
-            console.log('pairs', pairs);
-            forwardCellIsNotEmpty = true;
-          }
+
+          forwardCellIsNotEmpty = bottomEdge.some((y, x) => {
+            return state.field[y + current.coordinates.y + 1][x + current.coordinates.x] !== 0;
+          });
         }
 
         if (current.coordinates.y + current.matrix.length === VERTICAL || forwardCellIsNotEmpty) {
@@ -73,6 +70,7 @@ export default function reducer(state = initialState, action) {
 
         }
 
+        // just move to bottom
         current.coordinates.y++;
         return Object.assign({}, state, { figure: current });
 
@@ -88,8 +86,24 @@ export default function reducer(state = initialState, action) {
           console.log('try to move over board');
           return state;
         }
+
+        const leftEdge = state.figure.matrix.map((row) => {
+          let firstFilledIndex;
+          for (let j = 0; j < row.length; j++) {
+            if (!!row[j]) {
+              firstFilledIndex = j;
+              break;
+            }
+          }
+          return firstFilledIndex + state.figure.coordinates.x;
+        });
+
+        if (leftEdge.some((x, i) => state.field[state.figure.coordinates.y + i][x - 1])) {
+          console.log('prevent because left cells are not empty');
+          return state;
+        }
+
         const current = {...state.figure};
-        // check if possible
         current.coordinates.x--;
         return Object.assign({}, state, { figure: current });
 
@@ -100,8 +114,23 @@ export default function reducer(state = initialState, action) {
     case 'RIGHT': {
       if (state.figure) {
         if (state.figure.coordinates.x + state.figure.matrix[0].length === HORIZONTAL) {
-          // TODO: matrix can have empty cells
           console.log('try to move over board');
+          return state;
+        }
+
+        const rightEdge = state.figure.matrix.map((row) => {
+          let lastFilledIndex;
+          for (let j = row.length; j >= 0; j--) {
+            if (!!row[j]) {
+              lastFilledIndex = j;
+              break;
+            }
+          }
+          return lastFilledIndex + state.figure.coordinates.x;
+        });
+
+        if (rightEdge.some((x, i) => state.field[state.figure.coordinates.y + i][x + 1])) {
+          console.log('prevent because right cells are not empty');
           return state;
         }
         const current = {...state.figure};
@@ -126,6 +155,18 @@ export default function reducer(state = initialState, action) {
         if (rotated[0].length + current.coordinates.x > HORIZONTAL) {
           return state;
         }
+        // check if rotated figure doesn't conflict with filled field cells
+        const conflictMatrix = rotated.map((row, y) => {
+          return row.map((rotCell, x) => {
+            return state.field[y + current.coordinates.y][x + current.coordinates.x] + rotCell === 2;
+          });
+        });
+
+        if (conflictMatrix.flat().some(el => el)) {
+          console.log('conflict, conflict matrix: ', conflictMatrix);
+          return state;
+        }
+
         current.matrix = rotated;
         return Object.assign({}, state, { figure: current });
 
