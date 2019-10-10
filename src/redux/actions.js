@@ -22,3 +22,11 @@ export const right = () => (dispatch) => {
 export const rotate = () => (dispatch) => {
   dispatch({ type: 'ROTATE' });
 };
+
+export const speedUp = () => (dispatch) => {
+  dispatch({ type: 'INCREASE_SPEED' });
+};
+
+export const speedDown = () => (dispatch) => {
+  dispatch({ type: 'DECREASE_SPEED' });
+};

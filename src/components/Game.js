@@ -4,7 +4,7 @@ import Controllers from './Controllers.js';
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
 import connect from "react-redux/es/connect/connect";
-import { tick, left, right, rotate } from '../redux/actions'
+import { tick } from '../redux/actions'
 
 class Game extends React.Component {
   timeout = null;
@@ -26,7 +26,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { left, right, rotate } = this.props;
+    const { left, right, rotate, tick } = this.props;
 
     return (
       <main>
@@ -34,9 +34,6 @@ class Game extends React.Component {
         <Controllers
           start={ this.start }
           pause={ this.pause }
-          left={ left }
-          right={ right }
-          rotate={ rotate }
         />
       </main>
     );
@@ -46,10 +43,7 @@ class Game extends React.Component {
 Game.propTypes = {
   tick: PropTypes.func,
   speed: PropTypes.number,
-  left: PropTypes.func,
-  right: PropTypes.func,
-  rotate: PropTypes.func,
-}
+};
 
 const mapStateToProps = (state) => ({
   speed: state.speed,
@@ -57,9 +51,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   tick,
-  left,
-  right,
-  rotate,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

@@ -1,3 +1,49 @@
+@keyframes blinking {
+    0% {
+        border-color: white;
+        animation-timing-function: steps(1, end);
+    }
+    25% {
+        border-color: black;
+        animation-timing-function: steps(1, end);
+    }
+    50% {
+        border-color: white;
+        animation-timing-function: steps(1, end);
+    }
+    75% {
+        border-color: black;
+        animation-timing-function: steps(1, end);
+    }
+    100% {
+        border-color: white;
+        animation-timing-function: steps(1, end);
+    }
+}
+
+@keyframes inner-blinking {
+    0% {
+        background-color: white;
+        animation-timing-function: steps(1, end);
+    }
+    25% {
+        background-color: black;
+        animation-timing-function: steps(1, end);
+    }
+    50% {
+        background-color: white;
+        animation-timing-function: steps(1, end);
+    }
+    75% {
+        background-color: black;
+        animation-timing-function: steps(1, end);
+    }
+    100% {
+        background-color: white;
+        animation-timing-function: steps(1, end);
+    }
+}
+
 .square {
     width: 16px;
     height: 16px;
@@ -12,4 +58,19 @@
 
 .empty {
     border: solid 3px #e2e2e2;
+}
+
+.inner {
+    width: 8px;
+    height: 8px;
+    margin: 4px;
+    background-color: black;
+}
+
+.animation {
+    animation: blinking 1s infinite;
+}
+
+.inner-animation {
+    animation: inner-blinking 1s infinite;
 }
