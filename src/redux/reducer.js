@@ -16,6 +16,7 @@ const initialState = {
   animating: false,
   speed: 1000,
   figure: null,
+  score: 0,
 };
 
 export default function reducer(state = initialState, action) {
@@ -25,8 +26,14 @@ export default function reducer(state = initialState, action) {
       if (!!state.animating) {
         // animate disappearing row
         const newField = removeFilledRows(state.field, state.animating);
+        const toScore = state.animating.reduce((acc, el) => acc + el, 0);
 
-        return Object.assign({}, state, { field: newField, animating: false, figure: newFigure() });
+        return Object.assign({}, state, {
+          field: newField,
+          animating: false,
+          figure: newFigure(),
+          score: state.score + toScore
+        });
       }
 
       if (state.figure) {

@@ -17,6 +17,7 @@ class Game extends React.Component {
 
   pause = () => {
     clearTimeout(this.timeout);
+    this.timeout = null;
   }
 
   next = () => {

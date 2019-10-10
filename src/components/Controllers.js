@@ -18,7 +18,7 @@ class Controllers extends React.Component {
     const { start, pause, left, right, rotate, tick, speed, score, speedUp, speedDown } = this.props;
 
     return (
-      <>
+      <div className="controllers">
         <div onKeyPress={ this.keyPressHandler }>
           <Button text="start" action={ start }/>
           <Button text="pause" action={ pause }/>
@@ -33,7 +33,7 @@ class Controllers extends React.Component {
           <div>speed: { speed }</div>
           <div>score: { score }</div>
         </div>
-      </>
+      </div>
     );
   }
 }

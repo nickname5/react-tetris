@@ -13,3 +13,8 @@
   flex-direction: row;
   justify-content: flex-start;
 }
+
+.controllers {
+  width: 400px;
+  margin: 0 auto;
+}
