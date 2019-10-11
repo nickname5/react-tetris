@@ -9,7 +9,7 @@ class NextFigure extends React.Component {
 
   render() {
     const { nextFigure } = this.props;
-    const next = { ...nextFigure };
+    const next = JSON.parse(JSON.stringify(nextFigure));
     if (next && next.matrix) {
       next.coordinates.x = 3 - next.matrix[0].length === 0 ? 0 : 1;
       next.coordinates.y = next.matrix.length === 2 ? 1 : 0;
@@ -17,8 +17,8 @@ class NextFigure extends React.Component {
     const field = createEmptyField(3, 4);
     let handledField;
 
-    if (nextFigure) {
-      handledField = addFiguteToField(nextFigure, field);
+    if (next) {
+      handledField = addFiguteToField(next, field);
     } else {
       handledField = field;
     }

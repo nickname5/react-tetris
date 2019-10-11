@@ -37,19 +37,6 @@ export const removeFilledRows = (field, filledRows) => {
   return notFilledRows;
 };
 
-// export const deleteFilledRows = (field) => {
-//   const notFilledRows = field.filter((row) => {
-//     return row.reduce((acc, el) => acc + el, 0) !== HORIZONTAL;
-//   });
-//
-//   while (notFilledRows.length < field.length) {
-//     const newRow = new Array(HORIZONTAL);
-//     newRow.fill(0);
-//     notFilledRows.unshift(newRow);
-//   }
-//
-//   return notFilledRows;
-// };
 
 export const newFigure = (type) => {
   let figure;

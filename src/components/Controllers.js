@@ -9,7 +9,10 @@ class Controllers extends React.Component {
 
   keyPressHandler = (event) => {
     // console.log(event.key, !!event.key, event.key === ' ', event.key === '');
-    const { left, right, rotate, tick, pause, animating } = this.props;
+    const { left, right, rotate, tick, pause, animating, disabledMoving } = this.props;
+    if (disabledMoving) {
+      return;
+    }
     if (event.key === 'ArrowUp') {
       // console.log('up');
       rotate();
@@ -32,6 +35,14 @@ class Controllers extends React.Component {
     }
   }
 
+  moveActionWrapper = (action) => () => {
+    const { disabledMoving } = this.props;
+    if (disabledMoving) {
+      return;
+    }
+    action();
+  }
+
   // todo: add debounce/throttling to user actions
 
   render() {
@@ -42,10 +53,10 @@ class Controllers extends React.Component {
         <div onKeyDown={ this.keyPressHandler } tabIndex="0">
           <Button text="start" action={ start }/>
           <Button text="pause" action={ pause }/>
-          <Button text="left" action={ left } />
-          <Button text="right" action={ right }/>
-          <Button text="down" action={ tick } />
-          <Button text="rotate" action={ rotate }/>
+          <Button text="left" action={ this.moveActionWrapper(left) } />
+          <Button text="right" action={ this.moveActionWrapper(right) }/>
+          <Button text="down" action={ this.moveActionWrapper(tick) } />
+          <Button text="rotate" action={ this.moveActionWrapper(rotate) }/>
           <Button text="speed up" action={ speedUp }/>
           <Button text="speed down" action={ speedDown }/>
         </div>
@@ -73,6 +84,7 @@ Controllers.propTypes = {
   ]),
   speed: PropTypes.number,
   score: PropTypes.number,
+  disabledMoving: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

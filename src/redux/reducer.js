@@ -1,7 +1,6 @@
 import { addFiguteToField, newFigure, checkFilledRows, removeFilledRows, createEmptyField } from "../utils/utils";
 import { VERTICAL, HORIZONTAL} from "../utils/constants";
 
-// TODO: disable actions on pause
 // TODO: state to localStorage
 
 const initialField = createEmptyField();
@@ -144,6 +143,7 @@ export default function reducer(state = initialState, action) {
 
     case 'ROTATE': {
       if (state.figure && state.figure.type !== 'Q') {
+        // todo: rotating "I" around the center
         const current = {...state.figure};
         const rotated = [];
         for (let i = 0; i < current.matrix[0].length; i++) {

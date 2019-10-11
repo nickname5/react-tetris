@@ -8,23 +8,34 @@ import connect from "react-redux/es/connect/connect";
 import { tick } from '../redux/actions'
 
 class Game extends React.Component {
-  timeout = null;
+  constructor() {
+    super();
+    this.state = {
+      timeout: null
+    }
+  }
 
   start = () => {
-    if (!this.timeout) {
-      this.timeout = setTimeout(this.next, this.props.speed);
+    if (!this.state.timeout) {
+      this.setState({
+        timeout: setTimeout(this.next, this.props.speed),
+      });
     }
   }
 
   pause = () => {
-    clearTimeout(this.timeout);
-    this.timeout = null;
+    clearTimeout(this.state.timeout);
+    this.setState({
+      timeout: null,
+    });
   }
 
   next = () => {
     const { tick, speed } = this.props;
     tick();
-    this.timeout = setTimeout(this.next, speed);
+    this.setState({
+      timeout: setTimeout(this.next, this.props.speed),
+    });
   }
 
   render() {
@@ -38,6 +49,7 @@ class Game extends React.Component {
         <Controllers
           start={ this.start }
           pause={ this.pause }
+          disabledMoving={ !this.state.timeout }
         />
       </main>
     );
