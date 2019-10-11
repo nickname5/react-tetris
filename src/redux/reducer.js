@@ -2,10 +2,11 @@ import { addFiguteToField, newFigure, checkFilledRows, removeFilledRows, createE
 import { VERTICAL, HORIZONTAL} from "../utils/constants";
 
 // TODO: state to localStorage
+const savedState = localStorage.getItem('tetris');
 
 const initialField = createEmptyField();
 
-const initialState = {
+const initialState = savedState ? JSON.parse(savedState) : {
   field: JSON.parse(JSON.stringify(initialField)),
   animating: false,
   speed: 1000,
@@ -184,6 +185,11 @@ export default function reducer(state = initialState, action) {
 
     case 'DECREASE_SPEED': {
       return Object.assign({}, state, { speed: state.speed + 100 });
+    }
+
+    case 'SAVE': {
+      localStorage.setItem('tetris', JSON.stringify(state));
+      return state;
     }
 
     default:

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Button from './Button';
-import { tick, left, right, rotate, speedUp, speedDown } from '../redux/actions'
+import { tick, left, right, rotate, speedUp, speedDown, save } from '../redux/actions'
 
 class Controllers extends React.Component {
 
@@ -46,7 +46,7 @@ class Controllers extends React.Component {
   // todo: add debounce/throttling to user actions
 
   render() {
-    const { start, pause, left, right, rotate, tick, speed, score, speedUp, speedDown } = this.props;
+    const { start, pause, left, right, rotate, tick, speed, score, speedUp, speedDown, save } = this.props;
 
     return (
       <div className="controllers">
@@ -59,6 +59,7 @@ class Controllers extends React.Component {
           <Button text="rotate" action={ this.moveActionWrapper(rotate) }/>
           <Button text="speed up" action={ speedUp }/>
           <Button text="speed down" action={ speedDown }/>
+          <Button text="save" action={ save }/>
         </div>
         <div>
           <div>speed: { speed }</div>
@@ -78,6 +79,7 @@ Controllers.propTypes = {
   tick: PropTypes.func,
   speedUp: PropTypes.func,
   speedDown: PropTypes.func,
+  save: PropTypes.func,
   animating: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.array,
@@ -96,7 +98,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   left,
   right,
-  rotate,
+  rotate, save,
   tick, speedUp, speedDown,
 }, dispatch);
 

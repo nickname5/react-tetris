@@ -25,3 +25,7 @@ export const speedUp = () => (dispatch) => {
 export const speedDown = () => (dispatch) => {
   dispatch({ type: 'DECREASE_SPEED' });
 };
+
+export const save = () => (dispatch) => {
+  dispatch({ type: 'SAVE' });
+};
