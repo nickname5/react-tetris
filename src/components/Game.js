@@ -1,13 +1,15 @@
 import React from 'react';
 import Field from './Field.js';
 import NextFigure from './NextFigure.js';
+import GameOver from './GameOver.js';
 import Controllers from './Controllers.js';
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
 import connect from "react-redux/es/connect/connect";
-import { tick } from '../redux/actions'
+import { tick, newGame } from '../redux/actions'
 
 class Game extends React.Component {
+
   constructor() {
     super();
     this.state = {
@@ -15,7 +17,24 @@ class Game extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.gameOver && this.props.gameOver !== prevProps.gameOver) {
+      clearTimeout(this.state.timeout);
+      this.setState({
+         timeout: null,
+      });
+    }
+  }
+
   start = () => {
+    if (this.props.gameOver) {
+      this.props.newGame();
+      this.setState({
+        timeout: setTimeout(this.next, this.props.speed),
+      });
+      return;
+    }
+
     if (!this.state.timeout) {
       this.setState({
         timeout: setTimeout(this.next, this.props.speed),
@@ -34,7 +53,7 @@ class Game extends React.Component {
     const { tick, speed } = this.props;
     tick();
     this.setState({
-      timeout: setTimeout(this.next, this.props.speed),
+      timeout: setTimeout(this.next, speed),
     });
   }
 
@@ -51,6 +70,7 @@ class Game extends React.Component {
           pause={ this.pause }
           disabledMoving={ !this.state.timeout }
         />
+        <GameOver show={this.props.gameOver} />
       </main>
     );
   }
@@ -59,14 +79,17 @@ class Game extends React.Component {
 Game.propTypes = {
   tick: PropTypes.func,
   speed: PropTypes.number,
+  gameOver: PropTypes.bool,
+  newGame: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
   speed: state.speed,
+  gameOver: state.gameOver,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  tick,
+  tick, newGame,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

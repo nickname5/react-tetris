@@ -65,3 +65,7 @@ export const createEmptyField = (hor = HORIZONTAL, ver = VERTICAL) => {
   return initialField;
 };
 
+export const checkGameOver = (field) => {
+  return field[0].some(el => !!el);
+};
+

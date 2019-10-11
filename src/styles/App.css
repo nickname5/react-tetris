@@ -35,3 +35,21 @@
   width: 400px;
   margin: 0 auto;
 }
+
+main {
+  position: relative;
+}
+
+.game-over {
+  position: absolute;
+  top: 100px;
+  text-align: center;
+  padding: 20px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.3);
+  font-size: 54px;
+  font-family: Impact;
+  font-weight: 900;
+  left: 0;
+  right: 0;
+}

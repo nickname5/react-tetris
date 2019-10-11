@@ -1,19 +1,28 @@
-import { addFiguteToField, newFigure, checkFilledRows, removeFilledRows, createEmptyField } from "../utils/utils";
+import {
+  addFiguteToField,
+  newFigure,
+  checkFilledRows,
+  removeFilledRows,
+  createEmptyField,
+  checkGameOver
+} from "../utils/utils";
 import { VERTICAL, HORIZONTAL} from "../utils/constants";
 
 // TODO: state to localStorage
 const savedState = localStorage.getItem('tetris');
 
 const initialField = createEmptyField();
-
-const initialState = savedState ? JSON.parse(savedState) : {
+const defaultState = {
   field: JSON.parse(JSON.stringify(initialField)),
   animating: false,
   speed: 1000,
   figure: null,
   score: 0,
   nextFigure: null, // todo: when migrate to immutable?
+  gameOver: false,
 };
+
+const initialState = savedState ? JSON.parse(savedState) : defaultState;
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -60,6 +69,12 @@ export default function reducer(state = initialState, action) {
           // add figure to field if bottom or cell's conflict
 
           const newField = addFiguteToField(current, state.field);
+          const gameOver = checkGameOver(newField);
+
+          if (gameOver) {
+            return Object.assign({}, state, { gameOver: true });
+          }
+
           const filledRows = checkFilledRows(newField);
 
           if (filledRows.some((filled) => filled)) {
@@ -190,6 +205,10 @@ export default function reducer(state = initialState, action) {
     case 'SAVE': {
       localStorage.setItem('tetris', JSON.stringify(state));
       return state;
+    }
+
+    case 'NEW_GAME': {
+      return Object.assign({}, defaultState);
     }
 
     default:

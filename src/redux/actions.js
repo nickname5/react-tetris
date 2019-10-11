@@ -29,3 +29,7 @@ export const speedDown = () => (dispatch) => {
 export const save = () => (dispatch) => {
   dispatch({ type: 'SAVE' });
 };
+
+export const newGame = () => (dispatch) => {
+  dispatch({ type: 'NEW_GAME' });
+};
