@@ -5,13 +5,17 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-import reducer from './redux/reducer.js';
+import tetris from './tetris/reducer/reducer.js';
 
-const store = createStore(reducer, composeWithDevTools(
+const rootReducer = combineReducers({
+  tetris,
+});
+
+const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(thunk),
   // other store enhancers if any
 ));

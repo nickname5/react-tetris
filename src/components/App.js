@@ -1,11 +1,19 @@
 import React from 'react';
 import '../styles/App.css';
-import Game from './Game.js';
+import Tetris from '../tetris/components/Tetris';
+import Games from './Games.js';
+
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <Game/>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Games}/>
+          <Route path="/tetris" exact component={Tetris}/>
+        </Switch>
+      </Router>
     </div>
   );
 }

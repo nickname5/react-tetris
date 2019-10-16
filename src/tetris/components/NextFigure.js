@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Square from './Square';
-import {addFiguteToField, createEmptyField} from "../utils/utils";
+import Square from '../../components/Square';
+import {addFiguteToField, createEmptyField} from "../../utils/utils";
 
 class NextFigure extends React.Component {
 
@@ -49,7 +49,7 @@ NextFigure.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  nextFigure: state.nextFigure,
+  nextFigure: state.tetris.nextFigure,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

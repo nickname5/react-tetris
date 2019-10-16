@@ -5,8 +5,11 @@ import {
   removeFilledRows,
   createEmptyField,
   checkGameOver
-} from "../utils/utils";
-import { VERTICAL, HORIZONTAL} from "../utils/constants";
+} from "../../utils/utils";
+import {
+  VERTICAL, HORIZONTAL,
+  TICK, LEFT, DECREASE_SPEED, INCREASE_SPEED, NEW_GAME, RIGHT, ROTATE, SAVE
+} from "../constants/constants";
 
 // TODO: state to localStorage
 const savedState = localStorage.getItem('tetris');
@@ -26,7 +29,7 @@ const initialState = savedState ? JSON.parse(savedState) : defaultState;
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'TICK': {
+    case TICK: {
       console.log('tick');
       if (!!state.animating) {
         // animate disappearing row
@@ -96,7 +99,7 @@ export default function reducer(state = initialState, action) {
       }
     }
 
-    case 'LEFT': {
+    case LEFT: {
       if (state.figure) {
         if (state.figure.coordinates.x === 0) {
           console.log('try to move over board');
@@ -127,7 +130,7 @@ export default function reducer(state = initialState, action) {
       return Object.assign({}, state);
     }
 
-    case 'RIGHT': {
+    case RIGHT: {
       if (state.figure) {
         if (state.figure.coordinates.x + state.figure.matrix[0].length === HORIZONTAL) {
           console.log('try to move over board');
@@ -157,7 +160,7 @@ export default function reducer(state = initialState, action) {
       return Object.assign({}, state);
     }
 
-    case 'ROTATE': {
+    case ROTATE: {
       if (state.figure && state.figure.type !== 'Q') {
         // todo: rotating "I" around the center
         const current = {...state.figure};
@@ -191,23 +194,23 @@ export default function reducer(state = initialState, action) {
       return state;
     }
 
-    case 'INCREASE_SPEED': {
+    case INCREASE_SPEED: {
       if (state.speed - 100 > 0) {
         return Object.assign({}, state, { speed: state.speed - 100 });
       }
       return state;
     }
 
-    case 'DECREASE_SPEED': {
+    case DECREASE_SPEED: {
       return Object.assign({}, state, { speed: state.speed + 100 });
     }
 
-    case 'SAVE': {
+    case SAVE: {
       localStorage.setItem('tetris', JSON.stringify(state));
       return state;
     }
 
-    case 'NEW_GAME': {
+    case NEW_GAME: {
       return Object.assign({}, defaultState);
     }
 

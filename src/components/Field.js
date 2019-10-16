@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
 import Square from './Square';
-import {addFiguteToField} from "../utils/utils";
+import { addFiguteToField } from "../utils/utils";
 
 class Field extends React.Component {
 
@@ -47,16 +45,7 @@ Field.propTypes = {
     PropTypes.bool,
     PropTypes.array,
   ]),
+  speed: PropTypes.number,
 };
 
-const mapStateToProps = (state) => ({
-  field: state.field,
-  figure: state.figure,
-  animating: state.animating,
-  speed: state.speed,
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Field);
+export default Field;

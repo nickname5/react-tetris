@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Button from './Button';
-import { tick, left, right, rotate, speedUp, speedDown, save } from '../redux/actions'
+import Button from '../../components/Button';
+import { tick, left, right, rotate, speedUp, speedDown, save } from '../actions/actions'
 
 class Controllers extends React.Component {
 
@@ -90,9 +90,9 @@ Controllers.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  speed: state.speed,
-  score: state.score,
-  animating: state.animating,
+  speed: state.tetris.speed,
+  score: state.tetris.score,
+  animating: state.tetris.animating,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

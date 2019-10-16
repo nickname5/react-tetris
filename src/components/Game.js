@@ -1,12 +1,5 @@
 import React from 'react';
-import Field from './Field.js';
-import NextFigure from './NextFigure.js';
-import GameOver from './GameOver.js';
-import Controllers from './Controllers.js';
 import PropTypes from "prop-types";
-import {bindActionCreators} from "redux";
-import connect from "react-redux/es/connect/connect";
-import { tick, newGame } from '../redux/actions'
 
 class Game extends React.Component {
 
@@ -60,18 +53,13 @@ class Game extends React.Component {
   render() {
 
     return (
-      <main>
-        <div className='field-wrapper'>
-          <Field/>
-          <NextFigure/>
-        </div>
-        <Controllers
-          start={ this.start }
-          pause={ this.pause }
-          disabledMoving={ !this.state.timeout }
-        />
-        <GameOver show={this.props.gameOver} />
-      </main>
+      <>
+        { this.props.render( {
+            start: this.start,
+            pause: this.pause,
+            disabledMoving: !this.state.timeout,
+        } ) }
+      </>
     );
   }
 }
@@ -81,15 +69,7 @@ Game.propTypes = {
   speed: PropTypes.number,
   gameOver: PropTypes.bool,
   newGame: PropTypes.func,
+  render: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-  speed: state.speed,
-  gameOver: state.gameOver,
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  tick, newGame,
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default Game;
