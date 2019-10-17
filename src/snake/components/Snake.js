@@ -7,9 +7,11 @@ import connect from "react-redux/es/connect/connect";
 import { tick, newGame } from '../actions';
 import { Link } from 'react-router-dom';
 import {addSnakeToField} from "../../utils/utils";
+import Controllers from "./Controllers";
+import GameOver from "../../components/GameOver";
 // import {HORIZONTAL, VERTICAL} from "../constants";
 
-class Tetris extends React.Component {
+class Snake extends React.Component {
 
   render() {
     const { tick, speed, newGame, gameOver, apple, field, snake } = this.props;
@@ -23,7 +25,7 @@ class Tetris extends React.Component {
     }
 
     if (apple) {
-      const [x, y] = apple;
+      const [y, x] = apple;
       handledField[y][x] = 1;
     }
 
@@ -44,6 +46,12 @@ class Tetris extends React.Component {
                   speed={ speed }
                 />
               </div>
+              <Controllers
+                start={ start }
+                pause={ pause }
+                // disabledMoving={ disabledMoving }
+              />
+              <GameOver show={ gameOver } />
             </main>
           ) }
         />
@@ -52,11 +60,11 @@ class Tetris extends React.Component {
   }
 }
 
-Tetris.propTypes = {
+Snake.propTypes = {
   tick: PropTypes.func,
   // speed: PropTypes.number,
-  // gameOver: PropTypes.bool,
-  // newGame: PropTypes.func,
+  gameOver: PropTypes.bool,
+  newGame: PropTypes.func,
   field: PropTypes.array.isRequired,
   snake: PropTypes.object,
   // animating: PropTypes.oneOfType([
@@ -71,10 +79,11 @@ const mapStateToProps = (state) => ({
   snake: state.snake.snake,
   speed: state.snake.speed,
   apple: state.snake.apple,
+  gameOver: state.snake.gameOver,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   tick, newGame,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tetris);
+export default connect(mapStateToProps, mapDispatchToProps)(Snake);

@@ -39,6 +39,7 @@ class Tetris extends React.Component {
                   field={ handledField }
                   animating={ animating }
                   speed={ speed }
+                  classname="tetris-field"
                 />
                 <NextFigure/>
               </div>

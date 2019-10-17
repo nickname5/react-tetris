@@ -114,6 +114,6 @@ export const makeAppleCoordinates = (snake, hor, ver) => {
     appleInSnake = check(X, Y);
   }
 
-  return [X, Y];
+  return [Y, X];
 };
 

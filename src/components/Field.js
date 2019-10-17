@@ -5,10 +5,10 @@ import Square from './Square';
 class Field extends React.Component {
 
   render() {
-    const { field, animating, speed } = this.props;
+    const { field, animating, speed, classname } = this.props;
 
     return (
-      <div className="field">
+      <div className={ `field ${classname}` }>
         {
           field.map((row, i) => {
             return (

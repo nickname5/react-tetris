@@ -1,5 +1,5 @@
 import {
-  TICK, LEFT, UP, DOWN, NEW_GAME, RIGHT, SAVE
+  TICK, LEFT, UP, DOWN, NEW_GAME, RIGHT, SAVE, DECREASE_SPEED, INCREASE_SPEED
 } from "./constants";
 
 const tick_ = () => ({
@@ -32,4 +32,12 @@ export const save = () => (dispatch) => {
 
 export const newGame = () => (dispatch) => {
   dispatch({ type: NEW_GAME });
+};
+
+export const speedUp = () => (dispatch) => {
+  dispatch({ type: INCREASE_SPEED });
+};
+
+export const speedDown = () => (dispatch) => {
+  dispatch({ type: DECREASE_SPEED });
 };

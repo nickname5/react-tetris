@@ -5,6 +5,9 @@
   padding: 2px;
   border: solid 2px black;
   width: min-content;
+}
+
+.tetris-field {
   margin-right: 40px;
 }
 

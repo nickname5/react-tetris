@@ -30,7 +30,7 @@ const initialState = savedState ? JSON.parse(savedState) : defaultState;
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case TICK: {
-      console.log('tick');
+
       if (!!state.animating) {
         // animate disappearing row
         const newField = removeFilledRows(state.field, state.animating);

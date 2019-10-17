@@ -11,11 +11,12 @@ class Game extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log('game, gameover, prev, cur: ', prevProps.gameOver, this.props.gameOver);
     if (this.props.gameOver && this.props.gameOver !== prevProps.gameOver) {
-      clearTimeout(this.state.timeout);
-      this.setState({
-         timeout: null,
-      });
+      console.log('will be paused');
+      setTimeout(() => {
+        this.pause();
+      }, 1);
     }
   }
 
