@@ -10,9 +10,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import tetris from './tetris/reducer/reducer.js';
+import snake from './snake/reducer.js';
 
 const rootReducer = combineReducers({
-  tetris,
+  tetris, snake,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(

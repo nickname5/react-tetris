@@ -11,7 +11,7 @@ import {
   TICK, LEFT, DECREASE_SPEED, INCREASE_SPEED, NEW_GAME, RIGHT, ROTATE, SAVE
 } from "../constants/constants";
 
-// TODO: state to localStorage
+
 const savedState = localStorage.getItem('tetris');
 
 const initialField = createEmptyField();

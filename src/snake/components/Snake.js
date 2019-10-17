@@ -1,27 +1,30 @@
 import React from 'react';
 import Field from '../../components/Field.js';
-import NextFigure from './NextFigure.js';
-import GameOver from '../../components/GameOver.js';
 import Game from '../../components/Game.js';
-import Controllers from './Controllers.js';
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
 import connect from "react-redux/es/connect/connect";
-import { tick, newGame } from '../actions/actions';
+import { tick, newGame } from '../actions';
 import { Link } from 'react-router-dom';
-import { addFiguteToField } from "../../utils/utils";
+import {addSnakeToField} from "../../utils/utils";
+// import {HORIZONTAL, VERTICAL} from "../constants";
 
 class Tetris extends React.Component {
 
   render() {
-    const { tick, speed, newGame, gameOver, animating, field, figure } = this.props;
+    const { tick, speed, newGame, gameOver, apple, field, snake } = this.props;
 
     let handledField;
 
-    if (figure) {
-      handledField = addFiguteToField(figure, field);
+    if (snake) {
+      handledField = addSnakeToField(field, snake);
     } else {
       handledField = field;
+    }
+
+    if (apple) {
+      const [x, y] = apple;
+      handledField[y][x] = 1;
     }
 
     return (
@@ -37,17 +40,10 @@ class Tetris extends React.Component {
               <div className='field-wrapper'>
                 <Field
                   field={ handledField }
-                  animating={ animating }
+                  // animating={ animating }
                   speed={ speed }
                 />
-                <NextFigure/>
               </div>
-              <Controllers
-                start={ start }
-                pause={ pause }
-                disabledMoving={ disabledMoving }
-              />
-              <GameOver show={ gameOver } />
             </main>
           ) }
         />
@@ -58,23 +54,23 @@ class Tetris extends React.Component {
 
 Tetris.propTypes = {
   tick: PropTypes.func,
-  speed: PropTypes.number,
-  gameOver: PropTypes.bool,
-  newGame: PropTypes.func,
+  // speed: PropTypes.number,
+  // gameOver: PropTypes.bool,
+  // newGame: PropTypes.func,
   field: PropTypes.array.isRequired,
-  figure: PropTypes.object,
-  animating: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.array,
-  ]),
+  snake: PropTypes.object,
+  // animating: PropTypes.oneOfType([
+  //   PropTypes.bool,
+  //   PropTypes.array,
+  // ]),
 };
 
 const mapStateToProps = (state) => ({
-  speed: state.tetris.speed,
-  gameOver: state.tetris.gameOver,
-  field: state.tetris.field,
-  figure: state.tetris.figure,
-  animating: state.tetris.animating,
+  field: state.snake.field,
+  direction: state.snake.direction,
+  snake: state.snake.snake,
+  speed: state.snake.speed,
+  apple: state.snake.apple,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

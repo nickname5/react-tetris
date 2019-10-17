@@ -6,6 +6,7 @@ function App() {
   return (
     <div className="App">
       <Link to="/tetris">Tetris</Link>
+      <Link to="/snake">Snake</Link>
     </div>
   );
 }

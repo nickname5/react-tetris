@@ -1,6 +1,8 @@
 import {figures} from "./figures";
 import {HORIZONTAL, VERTICAL} from "./constants";
 
+// tetris
+
 export const addFiguteToField = (figure, field) => {
   const handledField = [...field.map((row) => [...row])];
 
@@ -67,5 +69,51 @@ export const createEmptyField = (hor = HORIZONTAL, ver = VERTICAL) => {
 
 export const checkGameOver = (field) => {
   return field[0].some(el => !!el);
+};
+
+// snake
+
+export const addSnakeToField = (field, snake) => {
+  const handledField = [...field.map((row) => [...row])];
+
+  snake.forEach((cell) => {
+    console.log('util addSnakeToField, apple, cell: ', cell);
+    const [y, x] = cell;
+    handledField[y][x] = 1;
+  });
+
+  return handledField;
+};
+
+export const makeAppleCoordinates = (snake, hor, ver) => {
+  const twoRandomCoord = () => [
+    Math.floor(Math.random() * hor),
+    Math.floor(Math.random() * ver),
+  ];
+
+  const check = (X, Y) => {
+    let isInSnake = false;
+
+    snake.forEach((cell) => {
+      console.log('util makeAppleCoordinates, apple, cell: ', cell);
+      const [y, x] = cell;
+      if (y === Y && x === X) {
+        isInSnake = true;
+      }
+    });
+
+    return isInSnake
+  };
+
+  let [X, Y] = twoRandomCoord();
+
+  let appleInSnake = check(X, Y);
+
+  while (appleInSnake) {
+    [X, Y] = twoRandomCoord();
+    appleInSnake = check(X, Y);
+  }
+
+  return [X, Y];
 };
 
