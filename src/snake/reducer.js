@@ -17,10 +17,10 @@ const initialField = createEmptyField(HORIZONTAL, VERTICAL);
 const defaultState = {
   field: JSON.parse(JSON.stringify(initialField)),
   direction: 'right',
-  directionStack: [],
+  // directionQueue: [],
   snake: defaultSnake,
   apple: makeAppleCoordinates(defaultSnake, HORIZONTAL, VERTICAL),
-  speed: 100,
+  speed: 180,
   score: 0,
   gameOver: false,
 };
@@ -32,7 +32,8 @@ export default function reducer(state = initialState, action) {
     case TICK: {
 
       // move
-      const newSnake = yallist.create([...state.snake.toArray().map(el => [...el])]);
+      const snakeArr = [...state.snake.toArray().map(el => [...el])];
+      const newSnake = yallist.create(snakeArr);
       const movedCell = [...newSnake.tail.value];
 
       // todo: check if movedCell in snake
@@ -73,6 +74,14 @@ export default function reducer(state = initialState, action) {
         }
       }
 
+      if (snakeArr.some((cell) => {
+        const [y, x] = cell;
+        console.log(y, x, movedCell[0], movedCell[1]);
+        return movedCell[0] === y && movedCell[1] === x;
+      })) {
+        return Object.assign({}, state, { gameOver: true });
+      }
+
       if (movedCell[0] === state.apple[0] && movedCell[1] === state.apple[1]) {
         newSnake.push(movedCell);
         return Object.assign({}, state, {
@@ -102,7 +111,7 @@ export default function reducer(state = initialState, action) {
       const newDirStack = [...state.directionStack];
       newDirStack.push('up');
       return Object.assign({}, state, { direction: 'up' });
-      return Object.assign({}, state, { directionStack: newDirStack });
+      // return Object.assign({}, state, { directionStack: newDirStack });
     }
 
     case DOWN: {

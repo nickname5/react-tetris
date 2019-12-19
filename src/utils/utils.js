@@ -77,7 +77,6 @@ export const addSnakeToField = (field, snake) => {
   const handledField = [...field.map((row) => [...row])];
 
   snake.forEach((cell) => {
-    console.log('util addSnakeToField, apple, cell: ', cell);
     const [y, x] = cell;
     handledField[y][x] = 1;
   });
@@ -95,7 +94,6 @@ export const makeAppleCoordinates = (snake, hor, ver) => {
     let isInSnake = false;
 
     snake.forEach((cell) => {
-      console.log('util makeAppleCoordinates, apple, cell: ', cell);
       const [y, x] = cell;
       if (y === Y && x === X) {
         isInSnake = true;
